@@ -111,7 +111,10 @@ Check that all containers are working properly
 vagrant@vagrant:~$ sudo docker-compose ps
 ```
 
-Open the browser at [http://localhost:8080](http://localhost:8080) two display the JupyterLab interface and [http://localhost:8081](http://localhost:8081) for the open data cube explorer. If you got "Internal Server Error" at [http://localhost:8081](http://localhost:8081) this is because we don't have indexed images, so don't worry, we will solve this later. Follow the instructions given the inde notebooks on this order:
+Open the browser at [http://localhost:8080](http://localhost:8080) to display the JupyterLab interface and [http://localhost:8081](http://localhost:8081) for the open data cube explorer. If you got "Internal Server Error" in the explorer, don't worry, this is because we don't have indexed images in the data cube database, we will solve this later. 
 
-1. Product definition and indexing.ipynb
-2. NDVI Analysis.ipynb
+Follow the instructions given the in the notebooks on this order and enjoy your journey !!
+
+1. Sentinel 2 - Product definition.ipynb
+2. Sentinel 2 - Image Indexing.ipynb
+3. Sentinel 2 - Normalized Vegetation Index (NDVI).ipynb
