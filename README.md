@@ -12,20 +12,22 @@ Feel free to take at look at the `Presentation.pdf` file.
 
 ## References
 
-We cover from 1 to 4 during the talk. But there are amazing Geoscience-BigData related projects that may be interesting to explore, references 5 and 6 cover one of these projects.
+We cover from 1 to 5 during the talk. Reference 6 have more introductory notebooks from the DEA datacube. Finally, there are amazing Geoscience-BigData related projects that may be interesting to explore, references 7 and 8 cover one of these projects. 
 
 1. [What is the Open Data Cube?](https://medium.com/opendatacube/what-is-open-data-cube-805af60820d7) 
 2. [Imaging the Past](https://landsat.gsfc.nasa.gov/article/imaging-past)
 3. [Open Data Cube Web Page](https://www.opendatacube.org/)
 4. [Open Data Cube Manual](https://datacube-core.readthedocs.io/en/latest/)
-5. [Pangeo: A community platform for Big Data geoscience](https://pangeo.io/)
-6. [Pangeo History](https://medium.com/pangeo/pangeo-2-0-2bedf099582d)
+5. [Cube in a Box](https://www.opendatacube.org/ciab)
+6. [Digital Earth Australia notebooks and tools repository](https://github.com/GeoscienceAustralia/dea-notebooks)
+7. [Pangeo: A community platform for Big Data geoscience](https://pangeo.io/)
+8. [Pangeo History](https://medium.com/pangeo/pangeo-2-0-2bedf099582d)
 
 ## Deploy your own Data Cube
 
 Here I will show you how you can deploy your own instance of the open datacube using the configuration files I have prepared for you. So let's do it, I promise it won't be painful.
 
-This configuration file were made to fullfil the purpose of this talk, then if you are considering to continue the exploration of the open data cube use the [Cube in a Box](https://www.opendatacube.org/ciab) alternative.
+This configuration file were made to fulfil the purpose of this talk, then if you are considering to continue the exploration of the open data cube use the [Cube in a Box](https://www.opendatacube.org/ciab) alternative.
 
 ### Requirements
 
@@ -38,12 +40,11 @@ This configuration file were made to fullfil the purpose of this talk, then if y
 2. Download and install [Vagrant 2.2.15](https://releases.hashicorp.com/vagrant/2.2.15/vagrant_2.2.15_x86_64.msi)
 3. Reboot your computer
 
-
 ### Deployment of a Virtual Machine with Vagrant
 
-Vangrant is a tool that automates the deployment of virtual machines. All the details and configuration of the virtual machine is already set for me in the `Vagrantfile`, you can take a look on this. On this file I configured an ubuntu based virtual machine, this machien will use two host posts the `8080` for Jupyter Notebooks and `8081` for the open data cube explorer. Make sure this ports are not used by other application on your computer.
+Vangrant is a tool that automates the deployment of virtual machines. All the details and configuration of the virtual machine is already set for me in the `Vagrantfile`, you can take a look on this. On this file I configured an ubuntu based virtual machine, this machine will use two host ports the `8080` for Jupyter Notebooks and `8081` for the open data cube explorer. Make sure this ports are not used by other application on your computer.
 
-We use a virtual machine in order to easy the deployment of containers and avoid other tecnical details that can take place during the deployment, since this virtual machine is already prepared to do that. However, if you are familiar with containers you can skip this section and deploy the open data cube containers directly your system. 
+We use a virtual machine in order to easy the deployment of containers and avoid other tecnical details that can take place during the deployment, since this virtual machine is already prepared to do that. However, if you are familiar with containers you can follow up to the 4 step and go to the next section to deploy the open data cube containers directly on your system. 
 
 1. Download [geopython-2021-main.zip](https://github.com/DonAurelio/geopython-2021/archive/refs/heads/main.zip) repository.
 2. Extract the ZIP file. 
@@ -67,15 +68,47 @@ The `vagrant up --provision` command will perform the following steps: (1) look 
 * *exit* the virtual machine `exit`
 * *destroy* the virtual machine use `vagrant destroy`, if you do this, the next time you need to use the virtual machine, use the `vagrant up --provision` command.
 
-
 ### Deployment of Open Data Cube Containers
 
-The notebooks folder contains `1. Indexing.ipynb` and `2. ndvi.ipynb` notebooks. The first notebook describe the indexing process you have to perform when you have a satellite image and you want that your open data cube instalattion recognize this image, so you can access the image's data through the data cube Python API. The second notebook describes the steps involved in a NDVI analysis performed with the open data cube.  
+Assuming you did step 5 of the previous section, use the `vagrant ssh` to get into the virtual machine you created in the previuos section. Then, use the following commands to deploy the open data cube containers.
 
-## Python scripts
+Get into the `/vagrant` directory
 
-Here we have a single script which is located at `/indexec_storage/S2_MSI_L2A`
+```bash 
+vagrant@vagrant:~$ cd /vagrant
+```
 
-## Deploy your own Data Cube
+Check if the `docker-compose.yml` is present in the current directory.
 
-Notebooks and scripts don't make much sense if we can't test and explore them on our own. Here I will show you how you can deploy your own instance of the open datacube using the configuration files I have prepared for you. So let's do it, I promise it won't be painful.
+```bash
+vagrant@vagrant:/vagrant$ ls -l
+
+total 1780
+-rwxrwxrwx 1 vagrant vagrant    1268 Apr 14 23:59 docker-compose.yml
+...
+```
+
+Start the postgis container
+
+```bash
+vagrant@vagrant:~$ sudo docker-compose up -d postgis
+```
+Start the jupyter container
+
+```bash
+vagrant@vagrant:~$ sudo docker-compose up -d jupyter
+```
+
+And start the explorer container
+
+```bash
+vagrant@vagrant:~$ sudo docker-compose up -d explorer
+```
+
+Check that all containers are working properly
+
+```bash
+vagrant@vagrant:~$ sudo docker-compose ps
+```
+
+Open the browser at [http://localhost:8080](http://localhost:8080) for JupyterLab and [http://localhost:8081](http://localhost:8081) for the open data cube explorer.
