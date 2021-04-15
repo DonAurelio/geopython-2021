@@ -1,3 +1,4 @@
 .vagrant
 .ipynb_checkpoints
 *.zip
+*.SAFE

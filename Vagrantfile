@@ -66,6 +66,7 @@ Vagrant.configure("2") do |config|
   # documentation for more information about their specific syntax and use.
   config.vm.provision "shell", inline: <<-SHELL
     sudo apt-get update
+    sudo apt-get install -y unzip
     sudo apt-get install -y docker.io
     sudo usermod -aG docker $USER
     sudo curl -s -L "https://github.com/docker/compose/releases/download/1.29.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose

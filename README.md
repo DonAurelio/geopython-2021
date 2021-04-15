@@ -111,6 +111,17 @@ Check that all containers are working properly
 vagrant@vagrant:~$ sudo docker-compose ps
 ```
 
+Initialize the data cube database
+
+```bash
+vagrant@vagrant:~$ sudo docker-compose exec jupyter datacube system init
+
+Initialising database...
+Created.
+Checking indexes/views.
+Done.
+```
+
 Open the browser at [http://localhost:8080](http://localhost:8080) to display the JupyterLab interface and [http://localhost:8081](http://localhost:8081) for the open data cube explorer. If you got "Internal Server Error" in the explorer, don't worry, this is because we don't have indexed images in the data cube database, we will solve this later. 
 
 Follow the instructions given the in the notebooks on this order and enjoy your journey !!
