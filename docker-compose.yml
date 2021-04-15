@@ -1,0 +1,50 @@
+version: '3'
+services:
+
+  postgis:
+    image: postgis/postgis:10-2.5
+    environment:
+      - POSTGRES_DB=datacube
+      - POSTGRES_USER=datacube
+      - POSTGRES_PASSWORD=datacube
+    volumes:
+      - postgis-db-volume:/var/lib/postgresql/data
+    restart: always
+
+  jupyter:
+    image: donaurelio/datacube:1.8.2-ubuntu-20.04
+    environment:
+      - PATH=$PATH:/home/datacube/.local/bin
+      # open data cube specific variables
+      - DB_DATABASE=datacube 
+      - DB_HOSTNAME=postgis 
+      - DB_USERNAME=datacube 
+      - DB_PASSWORD=datacube 
+    volumes:
+      - /vagrant:/vagrant
+    command: bash -c "cd /vagrant && jupyter-lab --no-browser --LabApp.token='' --port=8001 --ip=0.0.0.0 --allow-root"
+    ports:
+      - 8080:8001
+    restart: always
+
+  explorer:
+    image: donaurelio/datacube:1.8.2-ubuntu-20.04-explorer-2.4.3
+    ports:
+      # default ports
+      - "8081:8082"
+      # SSH port
+      - "2220:22"
+    environment:
+      - DB_DATABASE=datacube 
+      - DB_HOSTNAME=postgis 
+      - DB_USERNAME=datacube 
+      - DB_PASSWORD=datacube 
+      - DB_PORT=5432
+      - FLASK_ENV=deployment
+      - FLASK_APP=cubedash
+      - FLASK_DEBUG=1
+    command: >
+      gunicorn -b '0.0.0.0:8082' -w 1 --timeout 60 cubedash:app
+
+volumes:
+  postgis-db-volume:
