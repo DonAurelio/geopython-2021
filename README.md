@@ -111,4 +111,7 @@ Check that all containers are working properly
 vagrant@vagrant:~$ sudo docker-compose ps
 ```
 
-Open the browser at [http://localhost:8080](http://localhost:8080) for JupyterLab and [http://localhost:8081](http://localhost:8081) for the open data cube explorer.
+Open the browser at [http://localhost:8080](http://localhost:8080) two display the JupyterLab interface and [http://localhost:8081](http://localhost:8081) for the open data cube explorer. If you got "Internal Server Error" at [http://localhost:8081](http://localhost:8081) this is because we don't have indexed images, so don't worry, we will solve this later. Follow the instructions given the inde notebooks on this order:
+
+1. Product definition and indexing.ipynb
+2. NDVI Analysis.ipynb
