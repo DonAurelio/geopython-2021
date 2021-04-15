@@ -88,23 +88,11 @@ total 1780
 ...
 ```
 
-Start the postgis container
+Start postgis and jupyter containers
 
 ```bash
-vagrant@vagrant:~$ sudo docker-compose up -d postgis
+vagrant@vagrant:~$ sudo docker-compose up -d
 ```
-Start the jupyter container
-
-```bash
-vagrant@vagrant:~$ sudo docker-compose up -d jupyter
-```
-
-And start the explorer container
-
-```bash
-vagrant@vagrant:~$ sudo docker-compose up -d explorer
-```
-
 Check that all containers are working properly
 
 ```bash
@@ -122,9 +110,8 @@ Checking indexes/views.
 Done.
 ```
 
-Open the browser at [http://localhost:8080](http://localhost:8080) to display the JupyterLab interface and [http://localhost:8081](http://localhost:8081) for the open data cube explorer. If you got "Internal Server Error" in the explorer, don't worry, this is because we don't have indexed images in the data cube database, we will solve this later. 
-
-Follow the instructions given the in the notebooks on this order and enjoy your journey !!
+Open the browser at [http://localhost:8080](http://localhost:8080) to display the JupyterLab interface. Then,
+follow the instructions given in the notebooks. Enjoy your journey !!
 
 1. Sentinel 2 - Product definition.ipynb
 2. Sentinel 2 - Image Indexing.ipynb
